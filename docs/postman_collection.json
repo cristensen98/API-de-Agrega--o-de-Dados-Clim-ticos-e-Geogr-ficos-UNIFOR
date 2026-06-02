@@ -1,0 +1,244 @@
+{
+  "info": {
+    "_postman_id": "api-agregacao-dados-v1",
+    "name": "API de Agregação de Dados",
+    "description": "Coleção de requisições para testar a API de Agregação de Dados — Cidades e Clima Brasileiros.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "GET /api/v1/health — Saudável",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/health",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "health"]
+            },
+            "description": "Verifica se a API está operacional."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Tem campo status', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(['healthy','degraded']).to.include(body.status);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Clima por Cidade",
+      "item": [
+        {
+          "name": "GET /clima/Fortaleza — Sucesso",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/clima/Fortaleza",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "clima", "Fortaleza"]
+            },
+            "description": "Retorna dados geográficos e climáticos de Fortaleza."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Tem nome e estado', () => {",
+                  "  const b = pm.response.json();",
+                  "  pm.expect(b).to.have.property('nome');",
+                  "  pm.expect(b).to.have.property('estado');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /clima/São Paulo — Sucesso",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/clima/São Paulo",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "clima", "São Paulo"]
+            }
+          }
+        },
+        {
+          "name": "GET /clima/CidadeInexistente — 404",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/clima/CidadeInexistente99999",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "clima", "CidadeInexistente99999"]
+            },
+            "description": "Deve retornar 404 para cidade não encontrada."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Codigo CIDADE_NAO_ENCONTRADA', () => {",
+                  "  pm.expect(pm.response.json().codigo).to.eql('CIDADE_NAO_ENCONTRADA');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /clima/X — 400 Nome inválido",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/clima/X",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "clima", "X"]
+            },
+            "description": "Deve retornar 400 para nome com menos de 2 caracteres."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Codigo NOME_INVALIDO', () => {",
+                  "  pm.expect(pm.response.json().codigo).to.eql('NOME_INVALIDO');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cidades por Estado",
+      "item": [
+        {
+          "name": "GET /cidades/CE — Sucesso",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/cidades/CE",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "cidades", "CE"]
+            },
+            "description": "Retorna os 10 primeiros municípios do Ceará."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retorna array de cidades', () => {",
+                  "  pm.expect(pm.response.json().cidades).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /cidades/CE?limite=5 — Com limite",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/cidades/CE?limite=5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "cidades", "CE"],
+              "query": [{ "key": "limite", "value": "5" }]
+            }
+          }
+        },
+        {
+          "name": "GET /cidades/SP — São Paulo",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/cidades/SP",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "cidades", "SP"]
+            }
+          }
+        },
+        {
+          "name": "GET /cidades/XX — 404 UF não encontrada",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/cidades/XX",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "cidades", "XX"]
+            },
+            "description": "Deve retornar 404 para UF inexistente."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Codigo UF_NAO_ENCONTRADA', () => {",
+                  "  pm.expect(pm.response.json().codigo).to.eql('UF_NAO_ENCONTRADA');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /cidades/ceara — 400 Sigla inválida",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/cidades/ceara",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "cidades", "ceara"]
+            },
+            "description": "Deve retornar 400 para sigla com mais de 2 caracteres."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Codigo SIGLA_UF_INVALIDA', () => {",
+                  "  pm.expect(pm.response.json().codigo).to.eql('SIGLA_UF_INVALIDA');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
