@@ -2,5 +2,5 @@
 
 | Nome Completo                         | Matrícula | Papel                   |
 |---------------------------------------|-----------|-------------------------|
-| Cristensen Ubiratan Moreira Porpino   | 2425258   | Desenvolvedor FullStack |
-| João Paulo Gomes dos Santos           | 2012346   | Desenvolvedor FullStack |
+| Cristensen Ubiratan Moreira Porpino   | 2425258   | Desenvolvedor Backend |
+| João Paulo Gomes dos Santos           | 2012346   | Documentação |

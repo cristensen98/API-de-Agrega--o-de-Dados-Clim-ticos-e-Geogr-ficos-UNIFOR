@@ -51,7 +51,8 @@ const CONDICOES_TEMPO = {
  * Retorna informações geográficas e climáticas de uma cidade brasileira.
  */
 router.get('/:nome_cidade?', async (req, res) => {
-  const { nome_cidade } = req.params;
+  // Aceita nome_cidade do parâmetro de rota ou da query string
+  const nome_cidade = req.params.nome_cidade || req.query.nome_cidade;
 
   // Validação: nome mínimo de 2 caracteres
   if (!nome_cidade || nome_cidade.trim().length < 2) {
@@ -64,7 +65,7 @@ router.get('/:nome_cidade?', async (req, res) => {
   }
 
   try {
-    // ── Passo 1: Buscar cidade pelo nome via CPTEC ──────────────────────────
+    //  Buscar cidade pelo nome via CPTEC ──────────────────────────
     let cidadeResponse;
     try {
       cidadeResponse = await axios.get(
@@ -97,7 +98,7 @@ router.get('/:nome_cidade?', async (req, res) => {
     // Escolhe a cidade mais próxima ao nome buscado (primeiro resultado)
     const cidade = cidades[0];
 
-    // ── Passo 2: Buscar previsão climática pelo código CPTEC da cidade ──────
+    // Buscar previsão climática pelo código CPTEC da cidade
     let climaData = null;
     try {
       const previsaoResponse = await axios.get(
@@ -123,7 +124,7 @@ router.get('/:nome_cidade?', async (req, res) => {
       }
     }
 
-    // ── Passo 3: Montar resposta combinada ──────────────────────────────────
+    //  Montar resposta combinada 
     const resposta = {
       nome: cidade.nome,
       estado: cidade.estado,
