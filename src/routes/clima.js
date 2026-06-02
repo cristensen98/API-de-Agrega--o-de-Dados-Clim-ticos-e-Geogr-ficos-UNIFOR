@@ -50,7 +50,7 @@ const CONDICOES_TEMPO = {
  * GET /api/v1/clima/:nome_cidade
  * Retorna informações geográficas e climáticas de uma cidade brasileira.
  */
-router.get('/:nome_cidade', async (req, res) => {
+router.get('/:nome_cidade?', async (req, res) => {
   const { nome_cidade } = req.params;
 
   // Validação: nome mínimo de 2 caracteres

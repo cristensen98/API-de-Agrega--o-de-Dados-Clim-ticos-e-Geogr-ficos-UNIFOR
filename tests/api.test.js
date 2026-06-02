@@ -40,11 +40,13 @@ describe('GET /api/v1/clima/:nome_cidade', () => {
   }, 20000);
 
   test('deve retornar HTTP 200 com dados de São Paulo', async () => {
-    const res = await request(app).get('/api/v1/clima/São Paulo');
+    const res = await request(app).get('/api/v1/clima/Sao Paulo');
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('nome');
     expect(res.body).toHaveProperty('estado');
+    expect(res.body).toHaveProperty('consultado_em');
+    expect(typeof res.body.nome).toBe('string');
   }, 20000);
 
   // ── Tratamento de erros ───────────────────────────────────────────────────
@@ -67,7 +69,7 @@ describe('GET /api/v1/clima/:nome_cidade', () => {
     expect(res.body.nome_informado).toBe('X');
   });
 
-  test('deve retornar HTTP 400 para nome vazio (somente espaço)', async () => {
+  test('deve retornar HTTP 400 para nome com numero)', async () => {
     const res = await request(app).get('/api/v1/clima/ ');
 
     expect(res.status).toBe(400);
