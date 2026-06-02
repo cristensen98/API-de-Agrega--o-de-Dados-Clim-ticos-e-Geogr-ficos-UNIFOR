@@ -23,8 +23,8 @@ combinando informações da **Brasil API** (IBGE + CPTEC) em respostas padroniza
 
 ```bash
 # Clone o repositório
-git clone <https://github.com/cristensen98/API-de-Agrega--o-de-Dados-Clim-ticos-e-Geogr-ficos-UNIFOR.git>
-cd api-agregacao
+git clone https://github.com/cristensen98/API-de-Agrega--o-de-Dados-Clim-ticos-e-Geogr-ficos-UNIFOR.git
+cd "API de Agregação de Dados Climáticos e Geográficos UNIFOR"
 
 # Instale as dependências
 npm install
