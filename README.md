@@ -8,7 +8,7 @@ combinando informações da **Brasil API** (IBGE + CPTEC) em respostas padroniza
 | Nome                                  | Matrícula |
 |---------------------------------------|-----------|
 | Cristensen Ubiratan Moreira Porpino   | 2425258   |
-| João Paulo Gomes dos Santos           | 2012346   |
+| João Paulo Gomes dos Santos           | 2425138   |
 
 ---
 
