@@ -209,7 +209,8 @@ Cliente → GET /api/v1/clima/{cidade}
 │       ├── clima.js            # Rota /api/v1/clima/:nome_cidade
 │       └── cidades.js          # Rota /api/v1/cidades/:sigla_uf
 ├── tests/
-│   └── api.test.js             # Testes automatizados (Jest + Supertest)
+│   └── erros.test.js             # Testes automatizados de erros (Jest + Supertest)
+|   └── sucesso.test.js           # Testes automatizados de sucesso (Jest + Supertest)
 └── docs/
     └── postman_collection.json # Coleção Postman exportada
 ```
@@ -219,7 +220,7 @@ Cliente → GET /api/v1/clima/{cidade}
 ## ✅ Checklist de Entrega
 
 - [x] Repositório público no GitHub
-- [x] `INTEGRANTES.md` no formato correto
+- [x] `INTEGRANTES.md`
 - [x] API responde em `http://localhost:3000`
 - [x] `GET /api/v1/health` retorna HTTP 200
 - [x] `GET /api/v1/clima/Fortaleza` retorna dados climáticos
